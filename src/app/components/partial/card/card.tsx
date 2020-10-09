@@ -10,7 +10,7 @@ interface Props {
     url: string
 }
 
-export const Card: React.FC<Props> = (props)=>{
+export const Card: React.FC<Props> = ({children, title, description, url})=>{
     
     return (
         <a
@@ -36,6 +36,7 @@ export const Card: React.FC<Props> = (props)=>{
         `}>
             <Title>title</Title>
             <Caption>lorem ipsum dolor hogehoge</Caption>
+            {children}
 
         </a>
     )

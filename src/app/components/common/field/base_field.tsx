@@ -15,6 +15,8 @@ export const BaseField : React.FC<IProps>=({children,onChange,boderColor,fontSiz
           padding: 4px;
           border-radius:2px;
           outline: 0;
+          min-width: 240px;
+          min-height: 32px;
           font-size: ${fontSize??16}px;
           border: 1px solid #bdbdbd;
           &:focus {
