@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { Button } from './components/common/button/button';
+import { BaseField } from './components/common/field/base_field';
 import { Avator } from './components/common/media/image/avator';
 import { Column } from './components/layout/column';
 import { Row } from './components/layout/row';
@@ -26,6 +27,7 @@ const App: React.FC<{ compiler: string, framework: string }> = (props) => {
         <Card title={"hello"} url={"http://example.com"}></Card>
         <Card title={"hello"} url={"http://example.com"}></Card>
         </Row>
+        <BaseField></BaseField>
       <Card title={"hello"} url={"http://example.com"}></Card>
       <Avator link="http://example.com" size={32}></Avator>
        <Button onTap={()=>setCount(prevCount=>prevCount + 1)} label={"Ok"} />

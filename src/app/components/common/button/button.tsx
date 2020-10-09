@@ -23,6 +23,10 @@ export const Button: React.FC<Props> = ({label,onTap})=> {
       border: 1.6px solid #bdbdbd;
       transition: 0.3s;
       box-shadow: 0 2px 4px rgba(67,133,187,.07);
+      &:hover {
+        background-color: rgba(100,100,100,0.1);
+        box-shadow: 0 4px 6px rgba(67,133,187,.07);
+    }
     `}
     onClick={onTap}
   >
