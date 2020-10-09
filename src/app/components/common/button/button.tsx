@@ -19,6 +19,7 @@ export const Button: React.FC<Props> = ({label,onTap})=> {
       border-radius: 24px;
       min-width: 100px;
       cursor: pointer;
+      outline: none;
       color: #bdbdbd;
       border: 1.6px solid #bdbdbd;
       transition: 0.3s;

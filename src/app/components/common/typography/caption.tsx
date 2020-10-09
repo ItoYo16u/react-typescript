@@ -6,7 +6,7 @@ export const Caption:React.FC = ({children}) => {
   return (
       <p css={css`
         font-size:14px;
-        color: rgba(0,0,0,0.8);
+        color: rgba(0,0,0,0.7);
       `}>
           {children}
       </p>
