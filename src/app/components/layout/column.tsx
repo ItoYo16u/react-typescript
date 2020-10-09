@@ -3,18 +3,22 @@ import * as React from "react";
 import {css, jsx} from "@emotion/core"
 
 interface IProps {
-    children: React.FC[]
+    width?: string
 }
 
-export const Column : React.FC<IProps> = (props)=> {
+export const Column : React.FC<IProps> = ({children,width})=> {
     
     return <div css={css`
       display: flex;
+      display: -ms-flexbox;
+      width: ${width??"100%"};
       flex-direction: column;
+      justify-content: space-between;
     `}>
-        {props.children.map(child => <div css={css`
-          
-        `}
-        >child</div>)}
+        {React.Children.map(children,child => <div css={css`
+          display: block;
+          margin: 2px;
+          `}
+>{child}</div>)}
     </div>
 }

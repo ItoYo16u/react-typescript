@@ -1,20 +1,22 @@
 /** @jsx jsx */
 import * as React from "react";
-import {css, jsx} from "@emotion/core"
+import { css, jsx } from "@emotion/core"
 
 interface IProps {
-    children: React.FC[]
 }
 
-export const Row : React.FC<IProps> = (props)=> {
-    
+export const Row: React.FC<IProps> = ({ children }) => {
+
     return <div css={css`
       display: flex;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      flex-wrap: wrap;
       flex-direction: row;
     `}>
-        {props.children.map(child => <div css={css`
-          
-        `}
-        >child</div>)}
-    </div>
+        {React.Children.map(children, child => <div css={css`
+          display: block;
+          margin: 2px;
+          `}
+        >{child}</div>)}</div>
 }
