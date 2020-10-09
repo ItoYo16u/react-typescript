@@ -8,7 +8,7 @@ nodebrew,nodist,nodenvなどを使ってnodeのバージョン管理をしてく
 - node 12.11.0
 - npm 6.11.3
 
-# このチュートリアルでは
+このチュートリアルでは
 - React
 - TypeScript
 - emotion(Reactでstylesheetをイイ感じに扱うためのライブラリ)
