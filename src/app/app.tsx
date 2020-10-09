@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { Button } from './components/common/button';
+import { Button } from './components/common/button/button';
+import { Card } from './components/partial/card/card';
 
 const App: React.FC<{ compiler: string, framework: string }> = (props) => {
 
@@ -10,6 +11,7 @@ const App: React.FC<{ compiler: string, framework: string }> = (props) => {
       <div>{props.compiler}</div>
       <div>{props.framework}</div>
       <p>{count}</p>
+      <Card title={"hello"} url={"http://example.com"}></Card>
        <Button onTap={()=>setCount(prevCount=>prevCount + 1)} label={"Ok"} />
     </div>
   );
