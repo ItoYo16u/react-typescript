@@ -6,6 +6,7 @@ import { Avator } from './components/common/media/image/avator';
 import { ErrorMessage } from './components/common/media/message/error_message';
 import { WarningMessage } from './components/common/media/message/warning_message';
 import { CircularProgressIndicator } from './components/common/media/placeholder/circular_progress_indicator';
+import { Tag } from './components/common/tag/tag';
 import { Subtitle } from './components/common/typography/subtitle';
 import { Column } from './components/layout/column';
 import { Row } from './components/layout/row';
@@ -28,7 +29,18 @@ const App: React.FC<{ compiler: string, framework: string }> = (props) => {
         <Card title={"hello"} url={"http://example.com"}></Card>
         <WarningMessage>hogehoge</WarningMessage>
         <ErrorMessage>hogehoge</ErrorMessage>
-        </Column>
+      </Column>
+      <Row>
+        <Tag label="hello" link="http://example.com"></Tag>
+        <Tag label="hello"></Tag>
+        <Tag label="hello"></Tag>
+        <Tag label="hello"></Tag>
+        <Tag label="hello"></Tag>
+        <Tag label="hello"></Tag>
+        <Tag label="hello"></Tag>
+        <Tag label="hello"></Tag>
+        </Row>
+
         <Row>
         <Card title={"hello"} url={"http://example.com"}></Card>
         <Card title={"hello"} url={"http://example.com"}></Card>
