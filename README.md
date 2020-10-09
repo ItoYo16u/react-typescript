@@ -1,12 +1,11 @@
 # Objective
 > Provide a simple setup steps that can fit in one page.
 
-This is a sample project from the TypeScript book : [*TypeScript Deep Dive*](https://basarat.gitbook.io/typescript/content/docs/quick/browser.html).
-
 # How to use 
 
 ```
-git clone https://github.com/basarat/react-typescript.git
+git clone path/to/repository
+npm install
 npm i
 npm start
 ```
