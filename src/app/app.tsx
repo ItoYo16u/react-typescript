@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Button } from './components/common/button/button';
 import { BaseField } from './components/common/field/base_field';
 import { Avator } from './components/common/media/image/avator';
+import { ErrorMessage } from './components/common/media/message/error_message';
 import { WarningMessage } from './components/common/media/message/warning_message';
 import { CircularProgressIndicator } from './components/common/media/placeholder/circular_progress_indicator';
 import { Subtitle } from './components/common/typography/subtitle';
@@ -25,7 +26,8 @@ const App: React.FC<{ compiler: string, framework: string }> = (props) => {
         <Card title={"hello"} url={"http://example.com"}></Card>
         <Card title={"hello"} url={"http://example.com"}></Card>
         <Card title={"hello"} url={"http://example.com"}></Card>
-        <WarningMessage></WarningMessage>
+        <WarningMessage>hogehoge</WarningMessage>
+        <ErrorMessage>hogehoge</ErrorMessage>
         </Column>
         <Row>
         <Card title={"hello"} url={"http://example.com"}></Card>

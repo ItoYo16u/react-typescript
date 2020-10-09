@@ -5,7 +5,7 @@ import { css, jsx } from "@emotion/core"
 interface IProps {
 }
 
-export const WarningMessage: React.FC<IProps> = ({children}) => {
+export const ErrorMessage: React.FC<IProps> = ({children}) => {
   const [open, setOpen] = React.useState(true);
   return (
     <div
@@ -20,9 +20,9 @@ export const WarningMessage: React.FC<IProps> = ({children}) => {
       display: ${open ? "block" : "none"};
       padding: 8px;
       transition: 0.3s;
-      background-color: rgba(176, 40, 40,0.8);
+      background-color: rgba(237, 184, 38,0.8);
       :hover {
-        background-color: rgba(176, 40, 40,0.5);
+        background-color: rgba(237, 184, 38,0.5);
       }
     `}>
       <ul>
