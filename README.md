@@ -3,6 +3,8 @@
 
 # environment
 
+nodebrew,nodist,nodenvなどを使ってnodeのバージョン管理をしてください.
+
 - node 12.11.0
 - npm 6.11.3
 
