@@ -4,10 +4,11 @@ import { css, jsx } from '@emotion/core'
 
 interface Props {
   label: string
+  isRounded?:boolean
   onTap: ()=>void
 }
 
-export const Button: React.FC<Props> = ({label,onTap})=> {
+export const Button: React.FC<Props> = ({label,isRounded,onTap})=> {
 
     const color = 'white'
 
@@ -16,7 +17,7 @@ export const Button: React.FC<Props> = ({label,onTap})=> {
       padding: 8px 16px;
       background-color: transparent;
       font-size: 16px;
-      border-radius: 24px;
+      border-radius: ${isRounded? "24px":"0px"};
       min-width: 100px;
       cursor: pointer;
       outline: none;
