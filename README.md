@@ -1,6 +1,11 @@
 # Objective
 > Provide a simple setup steps that can fit in one page.
 
+# environment
+
+- node 12.11.0
+- npm 6.11.3
+
 # How to use 
 
 ```
