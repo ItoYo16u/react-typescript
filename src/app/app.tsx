@@ -3,8 +3,6 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { Button } from './components/common/button/button';
 import { BaseField } from './components/common/field/base_field';
-import { Textarea } from './components/common/field/textarea';
-import { Avator } from './components/common/media/image/avator';
 import { Subtitle } from './components/common/typography/subtitle';
 import { Row } from './components/layout/row';
 import { Card } from './components/partial/card/card';
@@ -31,9 +29,6 @@ const App: React.FC<{ compiler: string, framework: string }> = (props) => {
         <Card title={"hello"} url={"http://example.com"}></Card>
         </Row>
         <BaseField></BaseField>
-      <Card title={"hello"} url={"http://example.com"}></Card>
-      <Textarea></Textarea>
-      <Avator link="http://example.com" size={32}></Avator>
        <Button onTap={()=>setCount(prevCount=>prevCount + 1)} label={"Hello World"} />
     </div>
   );

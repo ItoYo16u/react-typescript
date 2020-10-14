@@ -8,6 +8,14 @@ nodebrew,nodist,nodenvなどを使ってnodeのバージョン管理をしてく
 - node 12.11.0
 - npm 6.11.3
 
+このチュートリアルでは
+- React
+- TypeScript
+- emotion(Reactでstylesheetをイイ感じに扱うためのライブラリ)
+
+を使います.
+ReactのComponentは、なんらかの事情がない限りFunctional Componentで記述します.
+
 # How to use 
 
 ```
