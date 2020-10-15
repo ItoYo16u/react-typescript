@@ -1,6 +1,7 @@
 import * as React from "react";
 import { CountStore} from "../data/store/count_store";
 
+/** T は contextのインターフェース */
 export function build_counter_context<T>(initialVal: T){
     const store = new CountStore<T>(initialVal);
 
@@ -32,7 +33,7 @@ export function build_counter_context<T>(initialVal: T){
                 // このstateは状態管理ではなくリビルドのためのkey.
                 this.state = initialVal;
             }
-
+            // この辺はwidget tree上に存在するときのみlistenするための構成
             public componentWillMount() {
                 store.subscribe(this.subscribeCounter);
             }

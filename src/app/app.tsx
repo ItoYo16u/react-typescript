@@ -8,20 +8,23 @@ import { Row } from './components/layout/row';
 import { Card } from './components/partial/card/card';
 import {css,jsx} from "@emotion/core";
 import "normalize.css";
+import { CounterContextProvider } from './system_components/providers/counter_context_provider';
+import { CounterContext } from './data/context/counter_context';
 
 const App: React.FC<{ compiler: string, framework: string }> = (props) => {
 
-  const [count,setCount] = useState(0);
   return (
-    <div
+  <CounterContextProvider >
+      <div
     css={css`
       background-color: rgba(247,247,247,1)
     `}
     >
-      <Subtitle>{count}</Subtitle>
+      <CounterContext.Consumer>
+        {(value)=><Subtitle>{value.counter}</Subtitle>}
+      </CounterContext.Consumer>
       <div>{props.compiler}</div>
       <div>{props.framework}</div>
-      <p>{count}</p>
         <Row>
         <Card title={"hello"} url={"http://example.com"}></Card>
         <Card title={"hello"} url={"http://example.com"}></Card>
@@ -29,8 +32,11 @@ const App: React.FC<{ compiler: string, framework: string }> = (props) => {
         <Card title={"hello"} url={"http://example.com"}></Card>
         </Row>
         <BaseField></BaseField>
-       <Button onTap={()=>setCount(prevCount=>prevCount + 1)} label={"Hello World"} />
+       <CounterContext.Consumer>
+        {({counter,incrimentCounter}) =>  <Button onTap={incrimentCounter} label={"Hello World"} />}
+       </CounterContext.Consumer>
     </div>
+  </CounterContextProvider>
   );
 }
 
