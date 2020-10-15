@@ -21,7 +21,6 @@ ReactのComponentは、なんらかの事情がない限りFunctional Component�
 ```
 git clone path/to/repository
 npm install
-npm i
 npm start
 ```
 Visit http://localhost:8080
