@@ -9,7 +9,7 @@ export class ItemStore extends ChangeNotiier<IItemStoreState>{
         super({items: items})
     }
 
-    get=():Item[]=>this.state.items
+    get:()=>Item[]=()=>this.state.items
 
     add=(item:Item)=>{
         const updated: Item[] = this.state.items.concat(item)
