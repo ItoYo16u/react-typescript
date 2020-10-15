@@ -14,7 +14,14 @@ nodebrew,nodist,nodenvなどを使ってnodeのバージョン管理をしてく
 - emotion(Reactでstylesheetをイイ感じに扱うためのライブラリ)
 
 を使います.
+
 ReactのComponentは、なんらかの事情がない限りFunctional Componentで記述します.
+
+emotionをつかってスタイルを当てる場合は、ファイルの冒頭に
+```
+/** @jsx jsx */
+```
+というコメントを追加してください. これが無いとemotionのスタイルのコンパイルに失敗します.
 
 # How to use 
 
