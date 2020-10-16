@@ -1,26 +1,41 @@
-import React, { createContext } from "react"
 import { Item } from "../../domain/model/item"
-import { ChangeNotiier } from "../../util/change_notifier"
-/** ItemStore は item の状態を管理する  */
-export interface IItemStoreState {
+import { ChangeNotifier } from "../../util/change_notifier"
+import { Action, State } from "../../util/change_notifier_util_type";
+
+export interface IItemStoreState extends State  {
   items: Item[]
 }
-export class ItemStore extends ChangeNotiier<IItemStoreState>{
+interface IItemStoreAction extends Action<State>{
+    get:()=>Item[]
+    add:(item:Item)=>void
+}
+/** 
+ * @singleton
+ * 
+ * ItemStore は item の状態を管理する シングルトン
+ *  */
+export class ItemStore extends ChangeNotifier<IItemStoreState,IItemStoreAction>{
     
-    constructor(items:Item[]){
-        super({items: items})
+    private static _instance: ItemStore;
+
+    private constructor(items: Item[]) {
+        super({ items: items })        
+    }
+    
+    public static  instance(items:Item[]): ItemStore {
+        if (!this._instance) { 
+            this._instance = new ItemStore(items);
+        }
+        return this._instance;
     }
 
-    get:()=>Item[]=()=>this.state.items
+    private get:()=>Item[]=()=>this.state.items
 
-    add=(item:Item)=>{
-        console.log("add");
-        console.log(this.state.items.length);
+    private add=(item:Item)=>{
         const updated: Item[] = this.state.items.concat(item)
         this.reduce({items: updated})
     }
-}
-export interface IItemStoreAction {
-    get:()=>Item[]
-    add:(item:Item)=>void
+
+    public actions: IItemStoreAction = { get: this.get, add: this.add };
+
 }
