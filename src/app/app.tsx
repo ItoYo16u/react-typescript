@@ -10,9 +10,10 @@ import {css,jsx} from "@emotion/core";
 import "normalize.css";
 import { CounterContextProvider } from './system_components/providers/counter_context_provider';
 import { CounterContext } from './data/context/counter_context';
-
+import { ItemContextProvider } from './system_components/providers/item_context_provider';
+import { IItemStoreAction } from './data/store/item_store';
+import { Item } from './domain/model/item';
 const App: React.FC<{ compiler: string, framework: string }> = (props) => {
-
   return (
   <CounterContextProvider >
       <div
@@ -23,6 +24,23 @@ const App: React.FC<{ compiler: string, framework: string }> = (props) => {
       <CounterContext.Consumer>
         {(value)=><Subtitle>{value.counter}</Subtitle>}
       </CounterContext.Consumer>
+      <ItemContextProvider 
+      builder={(ctx)=>{
+        const Ctx = ctx as unknown as React.Context<IItemStoreAction>
+        const item = new Item(1,"hoge")
+        return (
+          <div>
+            <Ctx.Consumer>
+        {value=><div>{value.get()}</div>}
+            </Ctx.Consumer>
+            <Ctx.Consumer>
+              {value=><Button label="test" onTap={()=>value.add(item)}></Button>}
+            </Ctx.Consumer>
+          </div>
+        )
+      }}
+      ></ItemContextProvider>
+
       <div>{props.compiler}</div>
       <div>{props.framework}</div>
         <Row>
@@ -33,7 +51,7 @@ const App: React.FC<{ compiler: string, framework: string }> = (props) => {
         </Row>
         <BaseField></BaseField>
        <CounterContext.Consumer>
-        {({counter,incrimentCounter}) =>  <Button onTap={incrimentCounter} label={"Hello World"} />}
+        {({incrimentCounter}) =>  <Button onTap={incrimentCounter} label={"Hello World"} />}
        </CounterContext.Consumer>
     </div>
   </CounterContextProvider>

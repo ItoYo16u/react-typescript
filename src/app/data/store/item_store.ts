@@ -1,4 +1,6 @@
-import React from "react"
+import React, { createContext } from "react"
+import { Item } from "../../domain/model/item"
+import { ChangeNotiier } from "../../util/change_notifier"
 /** ItemStore は item の状態を管理する  */
 export interface IItemStoreState {
   items: Item[]
@@ -12,6 +14,8 @@ export class ItemStore extends ChangeNotiier<IItemStoreState>{
     get:()=>Item[]=()=>this.state.items
 
     add=(item:Item)=>{
+        console.log("add");
+        console.log(this.state.items.length);
         const updated: Item[] = this.state.items.concat(item)
         this.reduce({items: updated})
     }

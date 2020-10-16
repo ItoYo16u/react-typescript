@@ -1,23 +1,32 @@
-import React, { useEffect, useState } from "react"
+import React, { createContext, useEffect, useState } from "react"
 import { IItemStoreAction, IItemStoreState, ItemStore } from "../../data/store/item_store"
-interface IProps {
-    Context: React.Context<IItemStoreAction>
-    initialItems?: Item[]
+import { Item } from "../../domain/model/item";
+
+type Builder = {
+    <T>(ctx: React.Context<T>): any
 }
 
-export const ItemContextProvider: React.FC<IProps> = ({ Context, initialItems, children }) => {
+interface IProps {
+    initialItems?: Item[]
+    builder: Builder
+}
+
+export const ItemContextProvider: React.FC<IProps> = ({ initialItems, builder }) => {
+    // TODO storeをシングルトンにする
     const store = new ItemStore(initialItems ?? [])
     const [_, setItems] = useState([]);
-    const listeners = (value:IItemStoreState)=> setItems(value.items)
+    const listener = (value: IItemStoreState) => {
+        setItems(value.items)
+    }
+    const Ctx: React.Context<IItemStoreAction> = createContext<IItemStoreAction>({ get: store.get, add: store.add });
     useEffect(() => {
-        store.subscribe(listeners)
-        return store.unsubscribe(listeners)
+        store.subscribe(listener)
     })
 
-    return (<Context.Provider value={
+    return (<Ctx.Provider value={
         { get: store.get, add: store.add }
     }>
-
-    </Context.Provider>
+        {builder(Ctx)}
+    </Ctx.Provider>
     );
 };

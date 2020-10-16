@@ -1,4 +1,4 @@
-class ChangeNotiier<T>{
+export class ChangeNotiier<T>{
     constructor(state:T){
         this.state = state
     }
