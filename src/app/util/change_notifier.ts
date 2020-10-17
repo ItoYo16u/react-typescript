@@ -5,14 +5,18 @@ interface IChangeNotifier<A extends Action<State>> {
     actions: A
 }
 
+type Selector<S extends State,T> = {
+    (state:S):T
+}
+
 
 
 
 /**
  * 
- * change notifier
+ * ChangeNotifier broadcasts `state:State` to subscribers by `reduce` method. 
  * 
- * subclass must be a singleton
+ * Subclass of this must be a `singleton`
  * 
  */
 export abstract class ChangeNotifier<S extends State,A extends Action<S>> implements IChangeNotifier<A>{
@@ -22,7 +26,7 @@ export abstract class ChangeNotifier<S extends State,A extends Action<S>> implem
     }
 
 
-    public state: S
+    private state: S
     private callbacks: Array<(val: S) => void> = []
     /**
      * 
@@ -34,7 +38,11 @@ export abstract class ChangeNotifier<S extends State,A extends Action<S>> implem
         this.callbacks.push(callback);
     };
 
-    
+
+    public selectState = <T>(selector:Selector<S,T>) => {
+        const _partialState = selector(this.state)
+        return _partialState;
+    }
     /**
      * remove all callback functions
      */
@@ -52,7 +60,6 @@ export abstract class ChangeNotifier<S extends State,A extends Action<S>> implem
         this.callbacks = this.callbacks.filter(cb => cb !== callback);
     };
 
-
     public reduce = (state: S) => {
         this.state = state;
         this.broadcast();
@@ -63,6 +70,6 @@ export abstract class ChangeNotifier<S extends State,A extends Action<S>> implem
             callback(this.state);
         });
     }
-
+    /**implement `actions:A` to access `state:State` */
     abstract actions:A
 }
