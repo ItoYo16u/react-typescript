@@ -1,4 +1,4 @@
-import { Item } from "../../domain/model/item";
+import { Item } from "../../domain/item/model/item";
 import { ChangeNotifier } from "../../util/change_notifier";
 import { Action, State } from "../../util/change_notifier_util_type";
 
