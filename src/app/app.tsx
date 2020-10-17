@@ -7,7 +7,6 @@ import { Row } from './components/layout/row';
 import { Card } from './components/partial/card/card';
 import {css,jsx} from "@emotion/core";
 import "normalize.css";
-import { CounterContext } from './data/context/counter_context';
 import { Item } from './domain/model/item';
 import { ChangeNotifierProvider } from './util/change_notifier_provider';
 import { ItemStore } from './data/store/item_store';
@@ -23,12 +22,17 @@ const App: React.FC<{ compiler: string, framework: string }> = (props) => {
         <ChangeNotifierProvider
           create={() => ItemStore.instance([])}
           builder={(Ctx, _) => {
-          return <div>
-
+            return <div>
+              <Ctx.Consumer>
+                {(actions) => (<Button label="item count" onTap={() => actions.add(item)}></Button>)}
+             </Ctx.Consumer>
           </div>
         }}>
 
-        </ChangeNotifierProvider>
+      </ChangeNotifierProvider>
+      <Button label="item count" onTap={() => { }}></Button>
+      <Button label="item count" onTap={()=>{}}></Button>
+
 
       <div>{props.compiler}</div>
       <div>{props.framework}</div>
@@ -39,9 +43,6 @@ const App: React.FC<{ compiler: string, framework: string }> = (props) => {
         <Card title={"hello"} url={"http://example.com"}></Card>
         </Row>
         <BaseField></BaseField>
-       <CounterContext.Consumer>
-        {({incrimentCounter}) =>  <Button onTap={incrimentCounter} label={"Hello World"} />}
-       </CounterContext.Consumer>
     </div>
   );
 }

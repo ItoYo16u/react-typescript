@@ -1,75 +1,107 @@
-
-import { Action, State } from "./change_notifier_util_type"
-
+import React, { SetStateAction } from "react";
+import { Action, State } from "./change_notifier_util_type";
+/** サブクラスでactions propertyの定義を強制する */
 interface IChangeNotifier<A extends Action<State>> {
-    actions: A
+  actions: A;
 }
+/**
+ * - ChangeNotifier を継承したstoreからstateを参照するためにつかう
+ * - React.FCからStoreのシングルトンを参照し、setStateを登録するために使う
+ *
+ */
+type Selector<S extends State, T> = {
+  (state: S): T
+};
 
-type Selector<S extends State,T> = {
-    (state:S):T
+export interface ISubscriber<S extends State, T extends any> {
+  selector: Selector<S, T>
+  setStateCallback: React.Dispatch<React.SetStateAction<T>>
 }
-
-
-
 
 /**
- * 
- * ChangeNotifier broadcasts `state:State` to subscribers by `reduce` method. 
- * 
+ *
+ * ChangeNotifier broadcasts `state:State` to subscribers by `reduce` method.
+ *
  * Subclass of this must be a `singleton`
- * 
+ *
  */
-export abstract class ChangeNotifier<S extends State,A extends Action<S>> implements IChangeNotifier<A>{
+export abstract class ChangeNotifier<S extends State, A extends Action<S>> implements IChangeNotifier<A> {
+  constructor(state: S) {
+    this.state = state;
+  }
+    
+    private state: S;
+  private callbacks: Array<(val: S) => void> = [];
+  private subscribers: Array<ISubscriber<S, any>> = [];
 
-    constructor(state:S) {
-        this.state = state;
-    }
+  /**
+   *
+   * @param callback
+   *
+   * add a callback function
+   */
+  public readonly addCallback = (callback: (val: S) => void) => {
+    this.callbacks.push(callback);
+  };
 
-
-    private state: S
-    private callbacks: Array<(val: S) => void> = []
-    /**
-     * 
-     * @param callback 
-     * 
-     * add a callback function
-     */
-    public addSubscriber = (callback: (val: S) => void) => {
-        this.callbacks.push(callback);
+    public readonly addSubscriber = <T>(s: ISubscriber<S, T>) => {
+        if (this.subscribers.includes(s)) {
+            console.warn("[WARN] this subscriber is already registered.")
+          return
+        } else {
+            this.subscribers.push(s);
+            s.setStateCallback(s.selector(this.state))
+      }
     };
-
-
-    public selectState = <T>(selector:Selector<S,T>) => {
-        const _partialState = selector(this.state)
-        return _partialState;
-    }
-    /**
-     * remove all callback functions
-     */
-    public dispose = () => {
-        this.callbacks = [];
+    public readonly removeSubscriber = <T>(callback:ISubscriber<S,T>) => {
+        this.subscribers = this.subscribers.filter(e=>e!==callback)
     }
 
+  private notifySubscribers = () => {
+    this.subscribers.forEach((s) => {
+      s.setStateCallback(s.selector(this.state));
+    });
+  };
 
-   /** 
-    * @param callback
-    * 
-    * remove a specific callback function
-    */
-    public removeSubscriber = (callback: (val: S) => void) => {
-        this.callbacks = this.callbacks.filter(cb => cb !== callback);
-    };
+  public readonly selectState = <T>(selector: Selector<S, T>) => {
+    const _partialState = selector(this.state);
+    return _partialState;
+  };
+  /**
+   * remove all callback functions
+   */
+  public readonly dispose = () => {
+      this.callbacks = [];
+      this.subscribers = [];
+  };
 
-    public reduce = (state: S) => {
-        this.state = state;
-        this.broadcast();
-    };
+  /**
+   * @param callback
+   *
+   * remove a specific callback function
+   */
+  public readonly removeCallback = (callback: (val: S) => void) => {
+    this.callbacks = this.callbacks.filter((cb) => cb !== callback);
+  };
 
-    private broadcast = () => {
-        this.callbacks.forEach(callback => {
-            callback(this.state);
-        });
-    }
-    /**implement `actions:A` to access `state:State` */
-    abstract actions:A
+  public readonly reduce = (state: S) => {
+    this.state = state;
+      this.broadcast();
+      this.notifySubscribers();
+  };
+
+  private broadcast = () => {
+    this.callbacks.forEach((callback) => {
+      callback(this.state);
+    });
+  };
+  /**
+   * implement `actions:A` to access `state:State`
+   *
+   * - read state: use selectState(selector)
+   *
+   * - update state, use `reduce(state)` method
+   * */
+    abstract actions: A;
+    
 }

@@ -1,6 +1,8 @@
 /** @jsx jsx */
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { css, jsx } from '@emotion/core'
+import { IItemStoreState, ItemStore } from "../../../data/store/item_store";
+import { ISubscriber } from "../../../util/change_notifier";
 
 interface Props {
   label: string
@@ -10,7 +12,6 @@ interface Props {
 
 export const Button: React.FC<Props> = ({label,isRounded,onTap})=> {
 
-    const color = 'white'
 
     return  <button
     css={css`

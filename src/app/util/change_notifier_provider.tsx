@@ -53,7 +53,7 @@ export class ChangeNotifierProvider<S, A> extends React.Component<IProps<S,A>, I
         const subscriber = (value: State) => {
             this.setState({rebuildFlag:value})
         }
-        this.state.store.addSubscriber(subscriber)
+        this.state.store.addCallback(subscriber)
     }
 
     componentWillUnmount() {
