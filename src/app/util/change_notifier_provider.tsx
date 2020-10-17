@@ -69,21 +69,3 @@ export class ChangeNotifierProvider<S, A> extends React.Component<IProps<S,A>, I
         )
     }
 }
-/*
-export const ChangeNotifierProviderX: React.FC<IProps> = ({ create, builder }) => {
-    const store = create();
-    const [_, setRebuildFlag] = useState(null);
-    const subscriber = (value: State) => {
-        setRebuildFlag(value)
-    }
-    //const Ctx: React.Context<Action> = createContext<Action>({});
-    useEffect(() => {
-        store.addSubscriber(subscriber)
-        return store.dispose()
-    })
-
-    return (<Ctx.Provider value={Ctx}>
-        {builder(Ctx)}
-    </Ctx.Provider>
-    );
-};*/

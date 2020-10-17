@@ -7,7 +7,7 @@ import { Row } from './components/layout/row';
 import { Card } from './components/partial/card/card';
 import {css,jsx} from "@emotion/core";
 import "normalize.css";
-import { Item } from './domain/model/item';
+import { Item } from './domain/item/model/item';
 import { ChangeNotifierProvider } from './util/change_notifier_provider';
 import { ItemStore } from './data/store/item_store';
 const App: React.FC<{ compiler: string, framework: string }> = (props) => {

@@ -1,17 +1,9 @@
 import React, { SetStateAction } from "react";
-import { Action, State } from "./change_notifier_util_type";
+import { Action, State,Selector } from "./change_notifier_util_type";
 /** サブクラスでactions propertyの定義を強制する */
 interface IChangeNotifier<A extends Action<State>> {
   actions: A;
 }
-/**
- * - ChangeNotifier を継承したstoreからstateを参照するためにつかう
- * - React.FCからStoreのシングルトンを参照し、setStateを登録するために使う
- *
- */
-type Selector<S extends State, T> = {
-  (state: S): T
-};
 
 export interface ISubscriber<S extends State, T extends any> {
   selector: Selector<S, T>
