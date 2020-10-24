@@ -1,41 +1,51 @@
 /** @jsx jsx */
 import * as React from "react"
 import { css, jsx } from '@emotion/core'
-import { Title } from "../../common/typography/title"
-import { Caption } from "../../common/typography/caption"
+import { CanvasColor, ColorTheme } from "../../../view/helper/color_helper"
+import { EdgeInsets } from "../../../view/helper/layout_helper"
+import { IItemStoreState, ItemStore } from "../../../data/store/item_store"
+import { ISubscriber } from "../../../util/change_notifier"
 
 interface Props {
-    title: string
-    description?: string
-    url: string
+    url: string,
+    backgroundColor?:string
 }
 
-export const Card: React.FC<Props> = ({children, title, description, url})=>{
+export const Card: React.FC<Props> = ({ children, url, backgroundColor }) => {
+    const store = ItemStore.instance([]);
+
+    const [itemCount, setCount] = React.useState<number>();
+    React.useEffect(() => {
+        const subscriber: ISubscriber<IItemStoreState, typeof itemCount> = {
+            selector: (state) => state.items.length,
+            setStateCallback: setCount
+        }
+        store.addSubscriber(subscriber)
+        return () => store.removeSubscriber(subscriber);
+    })
     
     return (
         <a
-          href="http://example.com" 
+          href={url} 
           css={css`
           text-decoration:none;
           display: block;
           cursor: pointer;
-          padding: 16px;
+          padding: ${EdgeInsets.VerticalSm}px ${EdgeInsets.HorizontalSm}px;
           border-radius: 8px;
-          max-width: 300px;
-          background-color: #FFF;
-          box-shadow: 0 2px 4px rgba(67,133,187,.07);
+          background-color: ${backgroundColor??CanvasColor.PaperPrimary};
+          box-shadow: 0 2px 4px ${ColorTheme.PaleShadow};
           text-align: left;
           transition: 0.3s;
           &:hover {
-              background-color: rgba(100,100,100,0.1);
-              box-shadow: 0 4px 6px rgba(67,133,187,.07);
+              transform: scale(1.02);
+              opacity: 0.8;
+              box-shadow: 0 4px 6px ${ColorTheme.PaleShadow};
           }
           &:visited {
             color: inherit;
           }
-        `}>
-            <Title>title</Title>
-            <Caption>lorem ipsum dolor hogehoge</Caption>
+        `}>{itemCount}
             {children}
 
         </a>

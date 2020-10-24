@@ -1,6 +1,7 @@
 /**@jsx jsx */
 import * as React from "react"
 import { css, jsx } from "@emotion/core"
+import { ColorTheme } from "../../../../view/helper/color_helper"
 
 interface IProps {
     imagePath?: string
@@ -16,10 +17,11 @@ export const Avator: React.FC<IProps> = (props) => {
         src={props.imagePath} 
         width={props.size} 
         height={props.size} 
-        css={css`
+                css={css`
+          margin: auto;
           border-radius: ${props.size / 2}px;
-          background-color: #bdbdbd;
-          box-shadow: 0 2px 4px rgba(67,133,187,.07);
+          background-color: ${ColorTheme.Disabled};
+          box-shadow: 0 2px 4px ${ColorTheme.Shadow};
         `}>
         </img>
     </a>

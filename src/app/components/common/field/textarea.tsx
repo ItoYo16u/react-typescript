@@ -2,6 +2,8 @@
 
 import * as React from "react"
 import {css,jsx} from "@emotion/core"
+import { CanvasColor } from "../../../view/helper/color_helper"
+import { BorderRadius } from "../../../view/helper/style_helper"
 
 interface IProps {
     onChange?:(event: React.ChangeEvent) => void
@@ -14,8 +16,8 @@ export const Textarea : React.FC<IProps>=({onChange,children})=>{
       outline:none;
       decoration: none;
       border:none;
-      background-color: #f5f5f5;
-      border-radius: 4px;
+      background-color: ${CanvasColor.Featured};
+      border-radius: ${BorderRadius.Xs};
       min-height: 100px;
       padding: 12px;
     `}>
