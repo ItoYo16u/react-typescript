@@ -10,7 +10,6 @@ import "normalize.css";
 import { Item } from './domain/item/model/item';
 import { ChangeNotifierProvider } from './util/change_notifier_provider';
 import { ItemStore } from './data/store/item_store';
-import { Avator } from './components/common/media/image/avator';
 import { Column } from './components/layout/column';
 import { Title } from './components/common/typography/title';
 import { Subtitle } from './components/common/typography/subtitle';
@@ -19,7 +18,7 @@ import { CircularProgressIndicator } from './components/common/media/placeholder
 import { Modal } from './components/layout/modal';
 const App: React.FC<{ compiler: string, framework: string }> = (props) => {
   const item = new Item(1, "test")
-  const [modalIsOpen, setIsOpen] = useState(true);
+  const [modalIsOpen, setIsOpen] = useState(false);
   return (
       <div
     css={css`

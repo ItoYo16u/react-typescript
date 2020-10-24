@@ -15,27 +15,32 @@ interface IProps {
 }
 interface PanelProps {}
 const Panel: React.FC<PanelProps> = ({ children }) => {
-  const [offset, setOffset] = React.useState(0.2);
+  const [offset, setOffset] = React.useState(8);
   const [opacity, setOpacity] = React.useState(0);
 
   React.useEffect(() => {
     const opacityInterval = setInterval(() => {
-      if (opacity > 1) {
-        clearInterval(opacityInterval);
-        return;
-      }
-      setOpacity(opacity + 0.2);
+      setOpacity(prevOpacity => {
+        const next = prevOpacity + 0.1;
+        if (next > 1) {
+          clearInterval(opacityInterval);
+        }
+        return next;
+      });
     }, 100);
     const offsetInterval = setInterval(() => {
-      if (offset < 0) {
-        clearInterval(offsetInterval);
-        return;
-      }
-      setOffset(offset - 0.05);
-    }, 100);
+   
+      setOffset(prevOffset => {
+        const next = prevOffset - 0.2;
+        if (next < 0) {
+          clearInterval(offsetInterval);
+        }
+        return next;
+      });
+    }, 10);
     const clear = () => { clearInterval(opacityInterval);clearInterval(offsetInterval);}
     return clear
-  },[opacity,offset])
+  },[])
 
   return (
     <div
@@ -46,7 +51,7 @@ const Panel: React.FC<PanelProps> = ({ children }) => {
     border-radius: ${BorderRadius.Small};
     opacity: ${opacity};
     position: absolute;
-    top: ${50 + offset}%;
+    top: ${45 + offset}%;
     box-shadow: 2px 4px 6px ${ColorTheme.Shadow};
     left: 50%;
     transform: translateY(-50%) translateX(-50%);
