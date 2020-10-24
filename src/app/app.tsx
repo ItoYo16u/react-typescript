@@ -42,7 +42,15 @@ const App: React.FC<{ compiler: string, framework: string }> = (props) => {
       <Button isFilled={true} isRounded={true} label="item count" onTap={() => { }}></Button>
       <Button isRounded={true} label="item count" onTap={() => { }}></Button>
       {modalIsOpen ? <Modal callback={() => setIsOpen(false)}>
-        {(_) => (<Button label="close" onTap={_}></Button>)}
+        {(_) => (<Column>
+          <Title>Confirm</Title>
+          <Subtitle>Agree Term of Use?</Subtitle>
+          <Row>
+            <Button label="cancel" onTap={_}></Button>
+           <Button label="agree" isFilled={true} onTap={()=>{console.log("do something")}}></Button>
+            
+          </Row>
+        </Column>)}
       </Modal> : <Button label="open" onTap={()=>setIsOpen(true)}></Button>}
 
 
