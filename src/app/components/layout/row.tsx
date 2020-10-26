@@ -4,9 +4,16 @@ import { css, jsx } from "@emotion/core";
 
 interface IProps {
   spacing?: number;
+  align?: Align,
 }
 
-export const Row: React.FC<IProps> = ({ children, spacing }) => {
+export enum Align {
+  right = "flex-end",
+  left = "flex-start",
+  center = "center"
+}
+
+export const Row: React.FC<IProps> = ({ children, spacing,align }) => {
   return (
     <div
       css={css`
@@ -15,6 +22,8 @@ export const Row: React.FC<IProps> = ({ children, spacing }) => {
         display: -ms-flexbox;
         flex-wrap: wrap;
         flex-direction: row;
+        justify-content:${align??Align.left};
+  
       `}
     >
       {React.Children.map(children, (child) => (

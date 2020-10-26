@@ -3,7 +3,7 @@ import * as React from "react"
 import { css, jsx } from '@emotion/core'
 import { CanvasColor, ColorTheme } from "../../../view/helper/color_helper"
 import { EdgeInsets } from "../../../view/helper/layout_helper"
-import { IItemStoreState, ItemStore } from "../../../data/store/item_store"
+import { IItemStoreState, ItemStoreContext } from "../../../data/store/item_store"
 import { ISubscriber } from "../../../util/change_notifier"
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
 }
 
 export const Card: React.FC<Props> = ({ children, url, backgroundColor }) => {
-    const store = ItemStore.instance([]);
+    const store = React.useContext(ItemStoreContext);
 
     const [itemCount, setCount] = React.useState<number>();
     React.useEffect(() => {
@@ -22,7 +22,7 @@ export const Card: React.FC<Props> = ({ children, url, backgroundColor }) => {
         }
         store.addSubscriber(subscriber)
         return () => store.removeSubscriber(subscriber);
-    })
+    },[])
     
     return (
         <a

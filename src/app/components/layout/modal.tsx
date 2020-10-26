@@ -15,32 +15,34 @@ interface IProps {
 }
 interface PanelProps {}
 const Panel: React.FC<PanelProps> = ({ children }) => {
-  const [offset, setOffset] = React.useState(8);
-  const [opacity, setOpacity] = React.useState(0);
+  const [animationTick, setAnimationTick] = React.useState(0);
+  const [styleState, setStyleState] = React.useState({
+    offset: 8,
+    opacity: 0,
+  });
 
   React.useEffect(() => {
-    const opacityInterval = setInterval(() => {
-      setOpacity(prevOpacity => {
-        const next = prevOpacity + 0.1;
+    const tick = setInterval(() => {
+      setAnimationTick((prevTick) => {
+        const next = prevTick + 0.01;
         if (next > 1) {
-          clearInterval(opacityInterval);
+          clearInterval(tick);
         }
+        setStyleState((prevStyle) => {
+          return {
+            ...prevStyle,
+            opacity: prevStyle.opacity + 0.01,
+            offset: prevStyle.offset - 0.015,
+          };
+        });
         return next;
       });
-    }, 100);
-    const offsetInterval = setInterval(() => {
-   
-      setOffset(prevOffset => {
-        const next = prevOffset - 0.2;
-        if (next < 0) {
-          clearInterval(offsetInterval);
-        }
-        return next;
-      });
-    }, 10);
-    const clear = () => { clearInterval(opacityInterval);clearInterval(offsetInterval);}
-    return clear
-  },[])
+    }, 1);
+
+    const clear = () => clearInterval(tick);
+    return clear;
+  }, []);
+  const curve = (n: number) => n**4;
 
   return (
     <div
@@ -49,12 +51,13 @@ const Panel: React.FC<PanelProps> = ({ children }) => {
     padding: ${EdgeInsets.VerticalMd}px ${EdgeInsets.HorizontalMd}px;
     background-color: ${CanvasColor.PaperPrimary};
     border-radius: ${BorderRadius.Small};
-    opacity: ${opacity};
+    opacity: ${styleState.opacity};
     position: absolute;
-    top: ${45 + offset}%;
+    top: ${45 + styleState.offset}%;
     box-shadow: 2px 4px 6px ${ColorTheme.Shadow};
+    min-width: 240px;
     left: 50%;
-    transform: translateY(-50%) translateX(-50%);
+    transform: translateY(-50%) translateX(-50%) scale(${curve(animationTick)});
     -webkit- transform: translateY(-50%) translateX(-50%);
   `}
     >

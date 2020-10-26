@@ -1,12 +1,12 @@
 import { Item } from "../../domain/item/model/item";
 import { ChangeNotifier } from "../../util/change_notifier";
+import { createChangeNotifierContext } from "../../util/change_notifier_provider";
 import { Action, State } from "../../util/change_notifier_util_type";
 
 export interface IItemStoreState extends State {
   items: Item[];
 }
 interface IItemStoreAction extends Action<State> {
-  get: () => Item[];
   add: (item: Item) => void;
 }
 /**
@@ -14,7 +14,7 @@ interface IItemStoreAction extends Action<State> {
  *
  * ItemStore は item の状態を管理する シングルトン
  *  */
-export class ItemStore extends ChangeNotifier<
+class ItemStore extends ChangeNotifier<
   IItemStoreState,
   IItemStoreAction
 > {
@@ -30,15 +30,14 @@ export class ItemStore extends ChangeNotifier<
     }
     return this._instance;
   }
-  private get: () => Item[] = () => {
-    const selector = (s: IItemStoreState) => s.items;
-    return this.selectState<Item[]>(selector);
-  };
 
   private add = (item: Item) => {
     const updated: Item[] = this.selectState((s) => s.items).concat(item);
     this.reduce({ items: updated });
   };
 
-  public actions: IItemStoreAction = { get: this.get, add: this.add };
+  public actions: IItemStoreAction = { add: this.add };
 }
+
+
+export const ItemStoreContext = createChangeNotifierContext(ItemStore.instance([]));
